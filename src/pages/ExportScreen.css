@@ -1,0 +1,166 @@
+.export-container {
+  flex: 1;
+  background-color: #fff;
+  min-height: 100vh;
+}
+
+.export-scroll-view {
+  flex: 1;
+}
+
+.export-header {
+  padding: 20px;
+  background-color: #f8f9fa;
+}
+
+.export-title {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #1a1a1a;
+}
+
+.export-subtitle {
+  font-size: 16px;
+  color: #666;
+}
+
+.progress-section {
+  padding: 16px;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.progress-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: #007AFF;
+  text-align: center;
+}
+
+.status-text {
+  font-size: 14px;
+  color: #666;
+  text-align: center;
+  margin-top: 8px;
+  font-style: italic;
+}
+
+.retry-button {
+  background-color: #007AFF;
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: none;
+  align-self: center;
+  margin-top: 12px;
+  cursor: pointer;
+}
+
+.retry-text {
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.stats-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding: 20px;
+  background-color: #fff;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-number {
+  font-size: 24px;
+  font-weight: bold;
+  color: #007AFF;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: #666;
+  margin-top: 4px;
+  text-align: center;
+}
+
+.sections-container {
+  padding: 20px;
+}
+
+.section {
+  margin-bottom: 32px;
+}
+
+.section-header {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: #333;
+}
+
+.export-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid #f8f8f8;
+}
+
+.export-item-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex: 1;
+}
+
+.export-icon {
+  font-size: 24px;
+  margin-right: 16px;
+}
+
+.export-text {
+  flex: 1;
+}
+
+.export-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 4px;
+  color: #1a1a1a;
+}
+
+.export-description {
+  font-size: 14px;
+  color: #666;
+  line-height: 18px;
+}
+
+.info-box {
+  margin: 20px;
+  padding: 16px;
+  background-color: #e3f2fd;
+  border-radius: 8px;
+  border-left: 4px solid #007AFF;
+}
+
+.info-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #007AFF;
+}
+
+.info-text {
+  font-size: 14px;
+  color: #666;
+  line-height: 20px;
+}

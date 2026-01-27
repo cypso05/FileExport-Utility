@@ -1,0 +1,279 @@
+class PDFExportService {
+  async generatePDF(data, options = {}, onProgress) {
+    try {
+      const isNative = typeof navigator !== 'undefined' && navigator.product === 'ReactNative';
+
+      if (!isNative) {
+        throw new Error('PDF export is only available in the mobile app');
+      }
+
+      if (onProgress) {
+        onProgress({ current: 1, total: 3, status: 'Generating PDF content...' });
+      }
+
+      const htmlContent = this.generateHTMLContent(data, options);
+      
+      if (onProgress) {
+        onProgress({ current: 2, total: 3, status: 'Creating PDF file...' });
+      }
+
+      // Dynamically import expo-print only in native environment
+      const moduleName = 'expo-print';
+      const Print = await import(/* @vite-ignore */ moduleName);
+
+      const { uri } = await Print.printToFileAsync({
+        html: htmlContent,
+        base64: false
+      });
+
+      if (onProgress) {
+        onProgress({ current: 3, total: 3, status: 'PDF generated successfully!' });
+      }
+
+      return uri;
+    } catch (error) {
+      console.error('PDF generation error:', error);
+      
+      if (error.message.includes('only available in the mobile app')) {
+        throw error; // Re-throw the web-specific error
+      }
+      throw new Error('Failed to generate PDF file');
+    }
+  }
+
+  generateHTMLContent(data, options) {
+    const {
+      title = 'QR Scanner Export',
+      includeTimestamps = true,
+      includeProductInfo = true,
+      customStyles = ''
+    } = options;
+
+    const timestamp = new Date().toLocaleString();
+    const totalItems = data.length;
+
+    return `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>${title}</title>
+        <style>
+          body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+          }
+          .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #007AFF;
+            padding-bottom: 20px;
+          }
+          .title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #007AFF;
+            margin: 0;
+          }
+          .subtitle {
+            font-size: 14px;
+            color: #666;
+            margin: 5px 0 0 0;
+          }
+          .summary {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+          }
+          .summary-item {
+            display: inline-block;
+            margin-right: 20px;
+            font-size: 14px;
+          }
+          .summary-label {
+            font-weight: bold;
+            color: #007AFF;
+          }
+          table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+          }
+          th {
+            background-color: #007AFF;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: bold;
+          }
+          td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+          }
+          tr:nth-child(even) {
+            background-color: #f8f9fa;
+          }
+          .barcode {
+            font-family: 'Courier New', monospace;
+            background: #f0f0f0;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+          }
+          .product-info {
+            font-size: 12px;
+            color: #666;
+          }
+          .footer {
+            margin-top: 30px;
+            text-align: center;
+            font-size: 12px;
+            color: #999;
+            border-top: 1px solid #ddd;
+            padding-top: 10px;
+          }
+          ${customStyles}
+        </style>
+      </head>
+      <body>
+        <div class="header">
+          <h1 class="title">${title}</h1>
+          <p class="subtitle">Generated on ${timestamp}</p>
+        </div>
+        
+        <div class="summary">
+          <div class="summary-item">
+            <span class="summary-label">Total Items:</span> ${totalItems}
+          </div>
+          <div class="summary-item">
+            <span class="summary-label">Barcodes:</span> ${data.filter(item => item.type === 'barcode').length}
+          </div>
+          <div class="summary-item">
+            <span class="summary-label">QR Codes:</span> ${data.filter(item => item.type === 'qr').length}
+          </div>
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Type</th>
+              <th>Data</th>
+              ${includeTimestamps ? '<th>Timestamp</th>' : ''}
+              ${includeProductInfo ? '<th>Product Info</th>' : ''}
+            </tr>
+          </thead>
+          <tbody>
+            ${data.map(item => this.generateTableRow(item, options)).join('')}
+          </tbody>
+        </table>
+
+        <div class="footer">
+          Generated by QR Scanner App • ${timestamp}
+        </div>
+      </body>
+      </html>
+    `;
+  }
+
+  generateTableRow(item, options) {
+    const { includeTimestamps, includeProductInfo } = options;
+    
+    return `
+      <tr>
+        <td>${item.id}</td>
+        <td>${item.type.toUpperCase()}</td>
+        <td>
+          <div class="barcode">${this.truncateText(item.data, 30)}</div>
+        </td>
+        ${includeTimestamps ? 
+          `<td>${new Date(item.timestamp).toLocaleString()}</td>` : ''
+        }
+        ${includeProductInfo ? `
+          <td class="product-info">
+            ${item.product ? `
+              <strong>${item.product.name || 'N/A'}</strong><br>
+              ${item.product.price ? `$${item.product.price}` : ''}
+              ${item.product.category ? ` • ${item.product.category}` : ''}
+            ` : 'No product info'}
+          </td>
+        ` : ''}
+      </tr>
+    `;
+  }
+
+  truncateText(text, maxLength) {
+    if (text.length <= maxLength) return text;
+    return text.substring(0, maxLength) + '...';
+  }
+
+  async generatePDFWithSections(data, sections, options) {
+    const isNative = typeof navigator !== 'undefined' && navigator.product === 'ReactNative';
+
+    if (!isNative) {
+      throw new Error('PDF export is only available in the mobile app');
+    }
+
+    // Enhanced PDF generation with multiple sections
+    const sectionedHTML = sections.map(section => {
+      const sectionData = data.filter(item => 
+        section.filter ? section.filter(item) : true
+      );
+      
+      return `
+        <div class="section">
+          <h2>${section.title}</h2>
+          ${this.generateHTMLContent(sectionData, {
+            ...options,
+            title: section.title
+          })}
+        </div>
+      `;
+    }).join('');
+
+    const fullHTML = `
+      <!DOCTYPE html>
+      <html>
+      <head>
+        <style>
+          body { font-family: Arial, sans-serif; margin: 20px; }
+          .section { margin-bottom: 40px; page-break-after: always; }
+          .section:last-child { page-break-after: avoid; }
+        </style>
+      </head>
+      <body>
+        ${sectionedHTML}
+      </body>
+      </html>
+    `;
+
+    // Dynamically import expo-print only in native environment
+    const moduleName = 'expo-print';
+    const Print = await import(/* @vite-ignore */ moduleName);
+
+    const { uri } = await Print.printToFileAsync({ html: fullHTML });
+    return uri;
+  }
+
+  // Web fallback method - generates HTML that can be printed or saved
+  async generateHTMLForWeb(data, options = {}, onProgress) {
+    if (onProgress) {
+      onProgress({ current: 1, total: 2, status: 'Generating HTML content...' });
+    }
+
+    const htmlContent = this.generateHTMLContent(data, options);
+    
+    if (onProgress) {
+      onProgress({ current: 2, total: 2, status: 'HTML content ready!' });
+    }
+
+    // Return HTML content that can be printed or saved as HTML file
+    return htmlContent;
+  }
+}
+
+export const pdfExportService = new PDFExportService();
