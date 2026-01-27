@@ -1,10 +1,4 @@
 # 📤 FileExport-Utility
-<div align="center">
-https://img.shields.io/badge/React%2520Native-0.74-blue?style=for-the-badge&logo=react
-https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react
-https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge
-https://img.shields.io/badge/TypeScript-Ready-3178C6?style=for-the-badge&logo=typescript
-
 Enterprise-Grade Export System for React & React Native Applications
 
 https://img.shields.io/github/stars/cypso05/FileExport-Utility?style=social
@@ -136,7 +130,7 @@ function MyComponent() {
 }
 
 Example 2: Full Export Screen
-javascript
+
 import { ExportScreen } from 'fileexport-utility';
 
 function HistoryPage() {
@@ -147,9 +141,10 @@ function HistoryPage() {
     </div>
   );
 }
+
 # 🎯 Advanced Features
-1. Custom Export Formats
-javascript
+ Custom Export Formats
+
 // Add custom export handlers
 exportUtility.registerFormat('custom', {
   extension: '.custom',
@@ -159,8 +154,8 @@ exportUtility.registerFormat('custom', {
     return processedData;
   }
 });
-2. Email Integration
-javascript
+
+ Email Integration
 // Send exports via email
 const options = {
   sendEmail: true,
@@ -170,24 +165,24 @@ const options = {
 };
 
 await exportUtility.export(data, 'pdf', options);
-3. Cloud Upload
-javascript
+ Cloud Upload
+ 
 // Auto-upload to cloud services
 const options = {
   autoUpload: true,
   cloudService: 'googleDrive', // or 'dropbox', 'onedrive'
   folderPath: '/exports/'
 };
-
 await exportUtility.export(data, 'json', options);
 
-4. Progress Tracking
+ Progress Tracking
 javascript
 // Real-time progress updates
 await exportUtility.export(data, 'csv', {}, (progress) => {
   console.log(`Export progress: ${progress.current}/${progress.total}`);
   console.log(`Status: ${progress.status}`);
 });
+
 📊 Data Types Supported
 Data Type	Export Format	Features
 OCR Scans	PDF, TXT, JSON	Preserves text, confidence scores, language info
@@ -195,9 +190,10 @@ QR Codes	Images, JSON, CSV	Saves visual codes + decoded data
 Barcode Scans	CSV, JSON, PDF	Product info, formats, timestamps
 Scan History	All formats	Comprehensive metadata
 Images	PNG, JPG, ZIP	Compression, quality options
+
 🎨 Customization Options
 Theming
-javascript
+
 import { ExportThemeProvider } from 'fileexport-utility';
 
 <ExportThemeProvider
@@ -327,10 +323,5 @@ If this utility helped you, please give it a ⭐️ on GitHub!
 Built with ❤️ by Cyrain Chidozie
 
 Powering exports for thousands of applications worldwide
-
-https://img.shields.io/twitter/follow/cypso05?style=social
-https://img.shields.io/github/followers/cypso05?style=social
-
-</div>
 
 Ready to power up your app's export capabilities? Install now! 🚀
