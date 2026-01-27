@@ -19,7 +19,7 @@ yarn add fileexport-utility
 
 # ✨ Features
 📊 Multi-Format Export
-javascript
+
 // Export to multiple formats
 await exportUtility.export(data, 'csv');   // 📊 Spreadsheets
 await exportUtility.export(data, 'pdf');   // 📄 Printable documents
@@ -48,10 +48,11 @@ Hybrid Apps - Capacitor/Expo compatibility
 Responsive UI - Adapts to all screen sizes
 
 🎨 Screenshot Preview
-<div align="center"> <img src="https://via.placeholder.com/400x800/3b82f6/ffffff?text=Export+Modal+UI" alt="Export Modal" width="200"/> 
-  <img src="https://via.placeholder.com/400x800/10b981/ffffff?text=Format+Selection" alt="Format Selector" width="200"/> 
-  <img src="https://via.placeholder.com/400x800/8b5cf6/ffffff?text=Progress+Tracking" alt="Progress Tracker" width="200"/> </div>
-  
+
+<div align="center"> <img src="https://via.placeholder.com/400x800/3b82f6/ffffff?text=Export+Modal+UI" alt="Export Modal" width="200"/>
+<img src="https://via.placeholder.com/400x800/10b981/ffffff?text=Format+Selection" alt="Format Selector" width="200"/> 
+<img src="https://via.placeholder.com/400x800/8b5cf6/ffffff?text=Progress+Tracking" alt="Progress Tracker" width="200"/> </div>
+
 # 🏗️ Architecture
 Core Components
 
@@ -64,9 +65,6 @@ javascript
   onExport={handleExport}
   exportType="scanHistory"
 />
-
-// 2. ExportScreen - Full-page export interface
-<ExportScreen />
 
 // 3. ExportButton - Action trigger
 <ExportButton
@@ -89,6 +87,7 @@ npm install fileexport-utility @react-native-async-storage/async-storage
 
 3. Web Configuration (React)
 javascript
+
 // In your main app file
 import { ExportProvider } from 'fileexport-utility';
 
@@ -101,10 +100,11 @@ function App() {
 }
 
 3. Native Configuration (React Native)
+   
 javascript
 // For iOS/Android, add file system permissions:
 // iOS: Add NSDocumentsDirectory to Info.plist
-// Android: Add WRITE_EXTERNAL_STORAGE permission
+// Android: Add WRITE_EXTERNAL_STORAGE permissi
 🚀 Quick Start Examples
 Example 1: Simple Export Modal
 javascript
@@ -324,7 +324,7 @@ MIT License - see LICENSE for details.
 If this utility helped you, please give it a ⭐️ on GitHub!
 
 <div align="center">
-Built with ❤️ by Cypso05
+Built with ❤️ by Cyrain Chidozie
 
 Powering exports for thousands of applications worldwide
 
