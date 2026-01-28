@@ -1,5 +1,7 @@
-<div align="center">
+
 # 📤 FileExport-Utility
+<div align="center">
+
 Enterprise-Grade Export System for React & React Native Applications
 
 https://img.shields.io/github/stars/cypso05/FileExport-Utility?style=social
@@ -321,8 +323,3 @@ MIT License - see LICENSE for details.
 If this utility helped you, please give it a ⭐️ on GitHub!
 
 <div align="center">
-Built with ❤️ by Cyrain Chidozie
-
-Powering exports for thousands of applications worldwide
-
-Ready to power up your app's export capabilities? Install now! 🚀
